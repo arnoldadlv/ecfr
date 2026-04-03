@@ -1,5 +1,5 @@
 {
-  "name": "ecfr",
+  "name": "@poamslayer/ecfr",
   "version": "0.1.0",
   "description": "CLI for the Electronic Code of Federal Regulations (eCFR) API",
   "type": "module",
