@@ -2,6 +2,7 @@
 import { Command, Option } from 'commander'
 import { titlesAction } from './commands/titles.js'
 import { agenciesAction } from './commands/agencies.js'
+import { structureAction } from './commands/structure.js'
 
 const program = new Command()
 
@@ -29,6 +30,15 @@ program
   .action(async (opts, cmd) => {
     const globalOpts = cmd.optsWithGlobals()
     await agenciesAction(opts, globalOpts)
+  })
+
+program
+  .command('structure <title>')
+  .description('Browse hierarchy of a CFR title')
+  .option('--date <date>', 'Date in YYYY-MM-DD format (defaults to today)')
+  .action(async (title, opts, cmd) => {
+    const globalOpts = cmd.optsWithGlobals()
+    await structureAction(title, opts, globalOpts)
   })
 
 program.parse()
