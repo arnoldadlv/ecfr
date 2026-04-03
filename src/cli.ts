@@ -5,6 +5,7 @@ import { agenciesAction } from './commands/agencies.js'
 import { structureAction } from './commands/structure.js'
 import { searchAction } from './commands/search.js'
 import { countsAction } from './commands/counts.js'
+import { changesAction } from './commands/changes.js'
 
 const program = new Command()
 
@@ -62,6 +63,17 @@ program
   .action(async (query, opts, cmd) => {
     const globalOpts = cmd.optsWithGlobals()
     await countsAction(query, opts, globalOpts)
+  })
+
+program
+  .command('changes <title>')
+  .description('Track regulation amendments for a title')
+  .option('--part <n>', 'Filter by part number')
+  .option('--section <n>', 'Filter by section number')
+  .option('--since <date>', 'Only show changes after this date (YYYY-MM-DD)')
+  .action(async (title, opts, cmd) => {
+    const globalOpts = cmd.optsWithGlobals()
+    await changesAction(title, opts, globalOpts)
   })
 
 program.parse()
