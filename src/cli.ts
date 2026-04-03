@@ -6,6 +6,7 @@ import { structureAction } from './commands/structure.js'
 import { searchAction } from './commands/search.js'
 import { countsAction } from './commands/counts.js'
 import { changesAction } from './commands/changes.js'
+import { correctionsAction } from './commands/corrections.js'
 
 const program = new Command()
 
@@ -74,6 +75,16 @@ program
   .action(async (title, opts, cmd) => {
     const globalOpts = cmd.optsWithGlobals()
     await changesAction(title, opts, globalOpts)
+  })
+
+program
+  .command('corrections')
+  .description('View CFR corrections and errata')
+  .option('--title <n>', 'Filter by CFR title number')
+  .option('--date <date>', 'Filter by date')
+  .action(async (opts, cmd) => {
+    const globalOpts = cmd.optsWithGlobals()
+    await correctionsAction(opts, globalOpts)
   })
 
 program.parse()
