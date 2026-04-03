@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { Command, Option } from 'commander'
 import { titlesAction } from './commands/titles.js'
+import { agenciesAction } from './commands/agencies.js'
 
 const program = new Command()
 
@@ -19,6 +20,15 @@ program
   .action(async (_opts, cmd) => {
     const globalOpts = cmd.optsWithGlobals()
     await titlesAction(globalOpts)
+  })
+
+program
+  .command('agencies')
+  .description('List all CFR agencies')
+  .option('--filter <text>', 'Filter agencies by name')
+  .action(async (opts, cmd) => {
+    const globalOpts = cmd.optsWithGlobals()
+    await agenciesAction(opts, globalOpts)
   })
 
 program.parse()
