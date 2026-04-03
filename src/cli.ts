@@ -3,6 +3,7 @@ import { Command, Option } from 'commander'
 import { titlesAction } from './commands/titles.js'
 import { agenciesAction } from './commands/agencies.js'
 import { structureAction } from './commands/structure.js'
+import { searchAction } from './commands/search.js'
 
 const program = new Command()
 
@@ -39,6 +40,18 @@ program
   .action(async (title, opts, cmd) => {
     const globalOpts = cmd.optsWithGlobals()
     await structureAction(title, opts, globalOpts)
+  })
+
+program
+  .command('search <query>')
+  .description('Search across all CFR text')
+  .option('--title <n>', 'Filter by CFR title number')
+  .option('--agency <slug>', 'Filter by agency slug')
+  .option('--page <n>', 'Page number')
+  .option('--per-page <n>', 'Results per page')
+  .action(async (query, opts, cmd) => {
+    const globalOpts = cmd.optsWithGlobals()
+    await searchAction(query, opts, globalOpts)
   })
 
 program.parse()
