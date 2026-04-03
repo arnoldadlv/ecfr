@@ -7,6 +7,7 @@ import { searchAction } from './commands/search.js'
 import { countsAction } from './commands/counts.js'
 import { changesAction } from './commands/changes.js'
 import { correctionsAction } from './commands/corrections.js'
+import { readAction } from './commands/read.js'
 
 const program = new Command()
 
@@ -85,6 +86,18 @@ program
   .action(async (opts, cmd) => {
     const globalOpts = cmd.optsWithGlobals()
     await correctionsAction(opts, globalOpts)
+  })
+
+program
+  .command('read <title>')
+  .description('Read regulation text for a title')
+  .option('--part <n>', 'Filter by part number')
+  .option('--section <n>', 'Filter by section number')
+  .option('--date <date>', 'Date in YYYY-MM-DD format (defaults to today)')
+  .option('--xml', 'Output raw XML instead of parsed text')
+  .action(async (title, opts, cmd) => {
+    const globalOpts = cmd.optsWithGlobals()
+    await readAction(title, opts, globalOpts)
   })
 
 program.parse()
