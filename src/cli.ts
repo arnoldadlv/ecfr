@@ -4,6 +4,7 @@ import { titlesAction } from './commands/titles.js'
 import { agenciesAction } from './commands/agencies.js'
 import { structureAction } from './commands/structure.js'
 import { searchAction } from './commands/search.js'
+import { countsAction } from './commands/counts.js'
 
 const program = new Command()
 
@@ -52,6 +53,15 @@ program
   .action(async (query, opts, cmd) => {
     const globalOpts = cmd.optsWithGlobals()
     await searchAction(query, opts, globalOpts)
+  })
+
+program
+  .command('counts <query>')
+  .description('Search result counts by hierarchy')
+  .option('--agency <slug>', 'Filter by agency slug')
+  .action(async (query, opts, cmd) => {
+    const globalOpts = cmd.optsWithGlobals()
+    await countsAction(query, opts, globalOpts)
   })
 
 program.parse()
